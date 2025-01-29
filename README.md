@@ -29,13 +29,15 @@ huggingface-cli download $MODEL_NAME
 4. Serve vLLM
 
 ```
+source .env
 vllm serve $MODEL_NAME
 ```
 
 5. Run test script
 
 ```
-python vllm_test.py
+source .env
+python vllm_test.py --model_name $MODEL_NAME --num_requests 10
 ```
 
 6. Collect results
