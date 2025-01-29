@@ -115,7 +115,6 @@ def main():
     # Save results to CSV
     df = pd.DataFrame(results, columns=["Latency (s)", "Task", "Response"])
     df["Model"] = args.model
-    df["n_gpus"] = os.environ.get("CUDA_VISIBLE_DEVICES", None)
     df["total_requests"] = args.num_requests
     df["run_id"] = run_id
     df.to_csv(output_csv, index=False, encoding="utf-8")

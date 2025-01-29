@@ -10,6 +10,7 @@ cd officeai_quote
 ```
 
 2. Install vLLM
+
 ```
 curl -LsSf https://astral.sh/uv/install.sh | sh
 uv venv vllm --python 3.12 --seed
@@ -21,8 +22,6 @@ uv pip install vllm
 
 ```
 MODEL_NAME=Qwen/Qwen2.5-32B-Instruct
-pip install -U "huggingface_hub[cli]"
-huggingface-cli login
 huggingface-cli download $MODEL_NAME
 ```
 
@@ -30,7 +29,7 @@ huggingface-cli download $MODEL_NAME
 
 ```
 source .env
-vllm serve $MODEL_NAME
+vllm serve $MODEL_NAME --tensor-parallel-size 4
 ```
 
 5. Run test script
@@ -44,5 +43,9 @@ python vllm_test.py --model_name $MODEL_NAME --num_requests 10
 
 ```
 # On the client
-scp -r user@server:/path/to/officeai_quote/results* .
+scp -r -P 37877 -i ~/.ssh/id_ed25519  root@213.173.98.84:/officeai_quote/results .
 ```
+
+## Troubleshooting
+
+ValueError: The model's max seq len (131072) is larger than the maximum number of tokens that can be stored in KV cache (67376). Try increasing `gpu_memory_utilization` or decreasing `max_model_len` when initializing the engine.
