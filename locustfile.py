@@ -39,6 +39,7 @@ TASKS = [
 PROMPT_FILE = os.getenv("PROMPT_FILE", "officeai.txt")
 MODEL_NAME = os.getenv("MODEL", "mistralai/Mistral-7B")  # Default model if not set
 N_CU = os.getenv("N_CU", 1)  # Number of concurrent users
+N_GPU = os.getenv("N_GPU", 1)  # Number of GPUs
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "your-api-key")  # Set your API key
 LONG_PROMPT = read_long_prompt(PROMPT_FILE)
 
@@ -137,6 +138,7 @@ def save_results(environment, **kwargs):
             "Task", "Response"
         ])
         df["Model"] = MODEL_NAME
+        df["GPUs"] = N_GPU
         df["Concurrency"] = N_CU
         df.to_csv(output_csv, index=False, encoding="utf-8")
 
