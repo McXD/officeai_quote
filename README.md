@@ -13,6 +13,7 @@ cd officeai_quote
 
 ```
 curl -LsSf https://astral.sh/uv/install.sh | sh
+source $HOME/.local/bin/env
 uv venv vllm --python 3.12 --seed
 source vllm/bin/activate
 uv pip install vllm
@@ -21,22 +22,23 @@ uv pip install vllm
 3. Install models
 
 ```
-  MODEL_NAME=Qwen/Qwen2.5-32B-Instruct
-huggingface-cli download $MODEL_NAME
+pip install -U "huggingface_hub[cli]"
+MODEL=Qwen/Qwen2.5-32B-Instruct
+huggingface-cli download $MODEL
 ```
 
 4. Serve vLLM
 
 ```
 source .env
-vllm serve $MODEL_NAME --tensor-parallel-size 4
+vllm serve $MODEL --tensor-parallel-size $N_GPU
 ```
 
 5. Run test script
 
 ```
 source .env
-python vllm_test.py --model_name $MODEL_NAME --num_requests 10
+./run_locust.sh
 ```
 
 6. Collect results
