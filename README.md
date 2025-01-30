@@ -21,7 +21,7 @@ uv pip install vllm
 3. Install models
 
 ```
-MODEL_NAME=Qwen/Qwen2.5-32B-Instruct
+  MODEL_NAME=Qwen/Qwen2.5-32B-Instruct
 huggingface-cli download $MODEL_NAME
 ```
 
@@ -49,3 +49,15 @@ scp -r -P 37877 -i ~/.ssh/id_ed25519  root@213.173.98.84:/officeai_quote/results
 ## Troubleshooting
 
 ValueError: The model's max seq len (131072) is larger than the maximum number of tokens that can be stored in KV cache (67376). Try increasing `gpu_memory_utilization` or decreasing `max_model_len` when initializing the engine.
+
+
+## Playbook2
+
+```txt
+For n_gpu in [1, 2, 4, 8]:
+  spin up machine with n_gpu
+  For each compabible models in [7B, 14B, 32B, 72B]
+     - run vLLM with model
+     - run locust script with 1, 10, 50, 100 users
+     - collect results
+```

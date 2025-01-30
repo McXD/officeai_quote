@@ -1,1 +1,4 @@
 results*
+benchmark*
+__pycache__/
+friendly/
